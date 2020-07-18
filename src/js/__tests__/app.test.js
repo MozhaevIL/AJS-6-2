@@ -1,39 +1,43 @@
-import sortProps from '../app';
+import getSpecialData from '../app';
 
-test('should sort object properties correctly when there are sorting keys', () => {
-  const inputObject = {
-    name: 'мечник', health: 10, level: 2, attack: 80, defence: 40,
-  };
-  const inputArray = ['name', 'level'];
-
-
-  const expected = [
-    { key: 'name', value: 'мечник' },
-    { key: 'level', value: 2 },
-    { key: 'attack', value: 80 },
-    { key: 'defence', value: 40 },
-    { key: 'health', value: 10 },
-  ];
-
-
-  const recieved = sortProps(inputObject, inputArray);
-  expect(recieved).toEqual(expected);
-});
-
-test('should sort object properties correctly without sorting keys', () => {
-  const inputObject = {
-    name: 'мечник', health: 10, level: 2, attack: 80, defence: 40,
+test('function should return special attacks list with correct description', () => {
+  const input = {
+    name: 'Лучник',
+    type: 'Bowman',
+    health: 50,
+    level: 3,
+    attack: 40,
+    defence: 10,
+    special: [
+      {
+        id: 8,
+        name: 'Двойной выстрел',
+        icon: 'http://...',
+        description: 'Двойной выстрел наносит двойной урон',
+      },
+      {
+        id: 9,
+        name: 'Нокаутирующий удар',
+        icon: 'http://...',
+      },
+    ],
   };
 
-
   const expected = [
-    { key: 'attack', value: 80 },
-    { key: 'defence', value: 40 },
-    { key: 'health', value: 10 },
-    { key: 'level', value: 2 },
-    { key: 'name', value: 'мечник' },
+    {
+      id: 8,
+      name: 'Двойной выстрел',
+      description: 'Двойной выстрел наносит двойной урон',
+      icon: 'http://...',
+    },
+    {
+      id: 9,
+      name: 'Нокаутирующий удар',
+      description: 'описание недоступно',
+      icon: 'http://...',
+    },
   ];
 
-  const recieved = sortProps(inputObject);
+  const recieved = getSpecialData(input);
   expect(recieved).toEqual(expected);
 });

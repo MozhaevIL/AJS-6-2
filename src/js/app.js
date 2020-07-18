@@ -1,19 +1,18 @@
-export default function sortProps(object, keys) {
-  let sortKeys;
-  if (keys) {
-    sortKeys = keys;
-  } else {
-    sortKeys = [];
+export default function getSpecialData(character) {
+  const specialsArray = [];
+
+  function specialDestructor(object) {
+    const {
+      id, name, description = 'описание недоступно', icon,
+    } = object;
+    return {
+      id, name, description, icon,
+    };
   }
-  const propsSortedByKeys = [];
-  const propsSortedByAlphabet = [];
-  for (const prop in object) {
-    if (!(sortKeys.indexOf(prop) === -1)) {
-      propsSortedByKeys[sortKeys.indexOf(prop)] = { key: prop, value: object[prop] };
-    } else {
-      propsSortedByAlphabet.push({ key: prop, value: object[prop] });
-    }
+
+  for (const attack of character.special) {
+    specialsArray.push(specialDestructor(attack));
   }
-  propsSortedByAlphabet.sort((a, b) => (a.key > b.key ? 1 : -1));
-  return propsSortedByKeys.concat(propsSortedByAlphabet);
+
+  return specialsArray;
 }
